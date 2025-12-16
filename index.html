@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রাইভেট হট ভিডিও</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <!-- মাল্টিপল SDK (আপনার ড্যাশবোর্ড থেকে ID রিপ্লেস করুন) -->
+    <!-- Monetag -->
+    <script src='//libtl.com/sdk.js' data-zone='10328886' data-sdk='show_10328886'></script>
+    <!-- AdsGram -->
+    <script async src="https://adsgram.ai/js/sdk.js"></script>
+    <!-- RichAds (ড্যাশবোর্ড থেকে স্ক্রিপ্ট URL কপি করুন) -->
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    
+    <style>
+        body { background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 20px; }
+        h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .video-card { background: rgba(255,255,255,0.2); border-radius: 15px; margin: 20px auto; padding: 15px; max-width: 90%; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        .thumbnail { width: 100%; max-width: 300px; border-radius: 10px; margin: 10px 0; }
+        .unlock-btn { background: #ff1744; color: white; border: none; padding: 15px 30px; font-size: 18px; border-radius: 50px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .unlock-btn:hover { background: #d50000; }
+        .disclaimer { font-size: 12px; margin-top: 30px; opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <h1>🔥 এক্সক্লুসিভ প্রাইভেট হট ভিডিও 🔥</h1>
+    <p>সবচেয়ে গরম এবং সেক্সি কালেকশন 😈 শুধুমাত্র ১৮+ • আনলক করে উপভোগ করুন!</p>
+
+    <!-- ভিডিও কার্ড ১ -->
+    <div class="video-card">
+        <img src="https://market-resized.envatousercontent.com/videohive.net/94c49018-3da8-477e-80a1-230c77abd3fc/video_preview/video_preview_0000.jpg?auto=format&q=85&cf_fit=crop&gravity=top&h=8000&w=590&s=5e267a143b601af90a0a2967fa1b3484dafaf20bd23bdd4d45f47dd7a978fa1f" class="thumbnail">
+        <h3>🔥 লিঙ্গেরিতে সেক্সি মেয়ে 🔥</h3>
+        <p>বেডরুমে গরম মুহূর্ত...</p>
+        <button class="unlock-btn" onclick="unlockVideo('card1', 'https://doctoredits.com/1861849', 'https://t.me/+jZ2MWDmS0pRkMGU1')">ভিডিও দেখতে আনলক করুন</button>
+    </div>
+
+    <!-- ভিডিও কার্ড ২ -->
+    <div class="video-card">
+        <img src="https://s3.envato.com/files/126993635/video_preview_0000.jpg" class="thumbnail">
+        <h3>😍 লিঙ্গেরিতে বেডে হাঁটু গেড়ে বসা হট মেয়ে 😍</h3>
+        <p>প্রাইভেট পোজ এবং টিজিং...</p>
+        <button class="unlock-btn" onclick="unlockVideo('card2', 'https://otieu.com/4/10331843', 'https://t.me/+9l8b97UuCvU5M2Fl')">ভিডিও দেখতে আনলক করুন</button>
+    </div>
+
+    <!-- কার্ড ৩ থেকে ৮: একইভাবে কপি করে লিঙ্ক এবং ইমেজ/টেক্সট চেঞ্জ করুন -->
+    <!-- উদাহরণ কার্ড ৩ -->
+    <div class="video-card">
+        <img src="https://elements-resized.envatousercontent.com/elements-video-cover-images/9bd438c2-12e9-481d-93c1-73819961061a/video_preview/video_preview_0000.jpg?w=500&cf_fit=cover&q=85&format=auto&s=9343adb53a1f1fb05a8ea7a39cad067fc7a4db5f957b05cd91c9298ca2de645a" class="thumbnail">
+        <h3>🔥 হেডফোনে ইরোটিক ড্যান্স 🔥</h3>
+        <p>সুন্দরী মেয়ের গরম মুভমেন্ট...</p>
+        <button class="unlock-btn" onclick="unlockVideo('card3', 'https://www.effectivegatecpm.com/mqt8c7pndp?key=09594e56b742d8c8244f954efdd1a138', 'https://adulthub3m.blogspot.com/p/adult-hub.html')">ভিডিও দেখতে আনলক করুন</button>
+    </div>
+
+    <!-- বাকি ৫টা কার্ড একইভাবে যোগ করুন (পুরোনো কোড থেকে কপি) -->
+
+    <div class="disclaimer">18+ Only • অ্যাড দেখে আনলক করুন</div>
+
+    <script>
+        function unlockVideo(cardId, affiliateLink, groupLink) {
+            let clicks = parseInt(localStorage.getItem(cardId) || '0') + 1;
+            localStorage.setItem(cardId, clicks);
+            const finalLink = (clicks === 1) ? affiliateLink : groupLink;
+
+            const networks = [
+                { show: () => typeof show_YOUR_MONETAG_ZONE === 'function' ? show_YOUR_MONETAG_ZONE() : Promise.reject() },
+                { show: () => AdsGram.show() },  // AdsGram params ডকস অনুযায়ী
+                { show: () => richAdsShowRewarded() }  // RichAds ডকস অনুযায়ী
+            ];
+
+            let tried = 0;
+            function tryNext() {
+                if (tried >= networks.length) { alert("অ্যাড লোড হচ্ছে না।"); return; }
+                networks[tried].show().then(() => {
+                    window.open(finalLink, '_blank');
+                    Telegram.WebApp.close();
+                }).catch(() => { tried++; tryNext(); });
+            }
+            tryNext();
+        }
+
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+    </script>
+</body>
+</html>
