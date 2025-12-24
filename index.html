@@ -35,7 +35,7 @@ h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0
     max-width: 90%;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-.thumbnail { width: 100%; max-width: 300px; border-radius: 10px; margin: 10px 0; }
+.thumbnail { width: 100%; max-width: 100%; border-radius: 10px; margin: 10px 0; }
 .unlock-btn {
     background: #ff1744;
     color: white;
@@ -49,6 +49,14 @@ h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0
 }
 .unlock-btn:hover { background: #d50000; }
 .disclaimer { font-size: 12px; margin-top: 30px; opacity: 0.8; }
+
+/* Responsive */
+@media (max-width: 768px){
+    body { padding: 10px; }
+    h1 { font-size: 24px; }
+    .unlock-btn { font-size: 16px; padding: 12px 25px; }
+    .video-card { padding: 12px; }
+}
 </style>
 </head>
 <body>
@@ -135,11 +143,19 @@ function callAd(networkFunc){
     });
 }
 
-// Unlock video function with fallback
+// Unlock video function with 1st & 2nd click logic
 function unlockVideo(cardId, affiliateLink, groupLink){
-    let clicks = parseInt(localStorage.getItem(cardId)||'0')+1;
+    let clicks = parseInt(localStorage.getItem(cardId)||'0') + 1;
     localStorage.setItem(cardId, clicks);
-    const finalLink = clicks===1 ? affiliateLink : groupLink;
+
+    if(clicks === 1){
+        if(window.Telegram && Telegram.WebApp){
+            Telegram.WebApp.openLink(affiliateLink);
+        } else {
+            window.open(affiliateLink,'_blank');
+        }
+        return;
+    }
 
     const networks = [
         () => typeof show_10328886==='function' ? callAd(show_10328886) : Promise.reject(),
@@ -150,19 +166,18 @@ function unlockVideo(cardId, affiliateLink, groupLink){
     let i = 0;
     function tryNext(){
         if(i >= networks.length){
-            // যদি সব অ্যাড fail হয়, link open হবে
             if(window.Telegram && Telegram.WebApp){
-                Telegram.WebApp.openLink(finalLink);
+                Telegram.WebApp.openLink(groupLink);
             } else {
-                window.open(finalLink,'_blank');
+                window.open(groupLink,'_blank');
             }
             return;
         }
         networks[i]().then(()=>{
             if(window.Telegram && Telegram.WebApp){
-                Telegram.WebApp.openLink(finalLink);
+                Telegram.WebApp.openLink(groupLink);
             } else {
-                window.open(finalLink,'_blank');
+                window.open(groupLink,'_blank');
             }
         }).catch(()=>{
             i++;
@@ -181,4 +196,3 @@ if(window.Telegram && Telegram.WebApp){
 
 </body>
 </html>
-
