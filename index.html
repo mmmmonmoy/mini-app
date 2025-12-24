@@ -14,9 +14,6 @@
 <!-- AdsGram SDK -->
 <script src="https://quge5.com/88/tag.min.js" data-zone="193564" async data-cfasync="false"></script>
 
-<!-- RichAds SDK (আপনার স্ক্রিপ্ট URL দিন) -->
-<script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
-
 <style>
 body {
     background: linear-gradient(135deg, #ff9a9e, #fad0c4);
@@ -58,7 +55,7 @@ h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0
 
 <!-- ৮টি ভিডিও কার্ড -->
 <div class="video-card">
-<img src="https://market-resized.envatousercontent.com/videohive.net/94c49018-3da8-477e-80a1-230c77abd3fc/video_preview/video_preview_0000.jpg?auto=format&q=85&cf_fit=crop&gravity=top&h=8000&w=590&s=5e267a143b601af90a0a2967fa1b3484dafaf20bd23bdd4d45f47dd7a978fa1f" class="thumbnail">
+<img src="https://market-resized.envatousercontent.com/videohive.net/94c49018-3da8-477e-80a1-230c77abd3fc/video_preview/video_preview_0000.jpg" class="thumbnail">
 <h3>🔥 লিঙ্গেরিতে সেক্সি মেয়ে 🔥</h3>
 <p>বেডরুমে গরম মুহূর্ত...</p>
 <button class="unlock-btn" onclick="unlockVideo('card1','https://www.effectivegatecpm.com/mqt8c7pndp?key=09594e56b742d8c8244f954efdd1a138','https://t.me/+jZ2MWDmS0pRkMGU1')">ভিডিও আনলক করুন</button>
@@ -116,41 +113,64 @@ h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0
 <div class="disclaimer">18+ Only • অ্যাড দেখে আনলক করুন</div>
 
 <script>
+// AdsGram init
+window.addEventListener("load", function(){
+    if(typeof AdsGram !== "undefined" && AdsGram.init){
+        AdsGram.init({ blockId:"193564" });
+    }
+});
+
 function unlockVideo(cardId, affiliateLink, groupLink){
-    let clicks = parseInt(localStorage.getItem(cardId)||'0')+1;
-    localStorage.setItem(cardId, clicks);
-    const finalLink = (clicks===1)? affiliateLink : groupLink;
+    let clicks = 1;
+    try {
+        clicks = parseInt(localStorage.getItem(cardId)||'0')+1;
+        localStorage.setItem(cardId,clicks);
+    } catch(e){}
+
+    const finalLink = clicks===1 ? affiliateLink : groupLink;
 
     const networks = [
-        { show: ()=> typeof show_10328886==='function'? show_10328886() : Promise.reject() }, // Monetag
-        { show: ()=> typeof AdsGram!=='undefined' && AdsGram.show? AdsGram.show() : Promise.reject() }, // AdsGram
-        { show: ()=> typeof richAdsShowRewarded==='function'? richAdsShowRewarded() : Promise.reject() } // RichAds
+        () => new Promise((resolve,reject)=>{
+            if(typeof show_10328886==='function'){
+                show_10328886();
+                setTimeout(resolve,1200);
+            } else reject();
+        }),
+        () => new Promise((resolve,reject)=>{
+            if(typeof AdsGram!=='undefined' && AdsGram.show){
+                AdsGram.show();
+                setTimeout(resolve,1200);
+            } else reject();
+        })
     ];
 
-    let tried=0;
+    let i = 0;
     function tryNext(){
-        if(tried>=networks.length){ alert("অ্যাড লোড হচ্ছে না।"); return; }
-        networks[tried].show().then(()=>{
-            window.open(finalLink,'_blank');
-            Telegram.WebApp.close();
-        }).catch(()=>{tried++; tryNext();});
+        if(i >= networks.length){
+            alert("অ্যাড লোড হচ্ছে না। পরে আবার চেষ্টা করুন।");
+            return;
+        }
+        networks[i]().then(()=>{
+            if(window.Telegram && Telegram.WebApp){
+                Telegram.WebApp.openLink(finalLink);
+            } else {
+                window.location.href = finalLink;
+            }
+        }).catch(()=>{
+            i++;
+            tryNext();
+        });
     }
+
     tryNext();
 }
 
 // Telegram WebApp ready
-if(typeof Telegram!=='undefined' && Telegram.WebApp){
+if(window.Telegram && Telegram.WebApp){
     Telegram.WebApp.ready();
     Telegram.WebApp.expand();
 }
 </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
