@@ -12,7 +12,10 @@
 <script src="//libtl.com/sdk.js" data-zone="10328886" data-sdk="show_10328886"></script>
 
 <!-- AdsGram SDK -->
-<script src="https://quge5.com/88/tag.min.js" data-zone="193564" async data-cfasync="false"></script>
+<script src="https://quge5.com/88/tag.min.js" data-zone="193564" async></script>
+
+<!-- RichAds SDK -->
+<script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
 
 <style>
 body {
@@ -53,9 +56,9 @@ h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0
 <h1>🔥 এক্সক্লুসিভ প্রাইভেট হট ভিডিও 🔥</h1>
 <p>সবচেয়ে গরম এবং সেক্সি কালেকশন 😈 শুধুমাত্র ১৮+ • আনলক করে উপভোগ করুন!</p>
 
-<!-- ৮টি ভিডিও কার্ড -->
+<!-- ভিডিও কার্ডসমূহ -->
 <div class="video-card">
-<img src="https://market-resized.envatousercontent.com/videohive.net/94c49018-3da8-477e-80a1-230c77abd3fc/video_preview/video_preview_0000.jpg?auto=format&q=85&cf_fit=crop&gravity=top&h=8000&w=590&s=5e267a143b601af90a0a2967fa1b3484dafaf20bd23bdd4d45f47dd7a978fa1f" class="thumbnail">
+<img src="https://market-resized.envatousercontent.com/videohive.net/94c49018-3da8-477e-80a1-230c77abd3fc/video_preview/video_preview_0000.jpg" class="thumbnail">
 <h3>🔥 লিঙ্গেরিতে সেক্সি মেয়ে 🔥</h3>
 <p>বেডরুমে গরম মুহূর্ত...</p>
 <button class="unlock-btn" onclick="unlockVideo('card1','https://www.effectivegatecpm.com/mqt8c7pndp?key=09594e56b742d8c8244f954efdd1a138','https://t.me/+jZ2MWDmS0pRkMGU1')">ভিডিও আনলক করুন</button>
@@ -69,7 +72,7 @@ h1 { font-size: 28px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0
 </div>
 
 <div class="video-card">
-<img src="https://elements-resized.envatousercontent.com/elements-video-cover-images/9bd438c2-12e9-481d-93c1-73819961061a/video_preview/video_preview_0000.jpg?w=500&cf_fit=cover&q=85&format=auto&s=9343adb53a1f1fb05a8ea7a39cad067fc7a4db5f957b05cd91c9298ca2de645a" class="thumbnail">
+<img src="https://elements-resized.envatousercontent.com/elements-video-cover-images/9bd438c2-12e9-481d-93c1-73819961061a/video_preview/video_preview_0000.jpg?w=500" class="thumbnail">
 <h3>🔥 হেডফোনে ইরোটিক ড্যান্স 🔥</h3>
 <p>সুন্দরী মেয়ের গরম মুভমেন্ট...</p>
 <button class="unlock-btn" onclick="unlockVideo('card3','https://10183.xml.4armn.com/direct-link?pubid=996271&siteid=381185','https://adulthub3m.blogspot.com/p/adult-hub.html')">ভিডিও আনলক করুন</button>
@@ -120,48 +123,52 @@ window.addEventListener("load", function(){
     }
 });
 
-function unlockVideo(cardId, affiliateLink, groupLink){
-    let clicks = 1;
-    try {
-        clicks = parseInt(localStorage.getItem(cardId)||'0')+1;
-        localStorage.setItem(cardId,clicks);
-    } catch(e){}
+// Call ad safely
+function callAd(networkFunc){
+    return new Promise((resolve,reject)=>{
+        try{
+            networkFunc();
+            setTimeout(resolve,1200);
+        } catch(e){
+            reject();
+        }
+    });
+}
 
+// Unlock video function
+function unlockVideo(cardId, affiliateLink, groupLink){
+    let clicks = parseInt(localStorage.getItem(cardId)||'0')+1;
+    localStorage.setItem(cardId, clicks);
     const finalLink = clicks===1 ? affiliateLink : groupLink;
 
     const networks = [
-        () => new Promise((resolve,reject)=>{
-            if(typeof show_10328886==='function'){
-                show_10328886();
-                setTimeout(resolve,1200);
-            } else reject();
-        }),
-        () => new Promise((resolve,reject)=>{
-            if(typeof AdsGram!=='undefined' && AdsGram.show){
-                AdsGram.show();
-                setTimeout(resolve,1200);
-            } else reject();
-        })
+        () => typeof show_10328886==='function' ? callAd(show_10328886) : Promise.reject(),
+        () => typeof AdsGram!=='undefined' && AdsGram.show ? callAd(AdsGram.show) : Promise.reject(),
+        () => typeof richAdsShowRewarded==='function' ? callAd(richAdsShowRewarded) : Promise.reject()
     ];
 
     let i = 0;
     function tryNext(){
         if(i >= networks.length){
             alert("অ্যাড লোড হচ্ছে না। পরে আবার চেষ্টা করুন।");
+            if(window.Telegram && Telegram.WebApp){
+                Telegram.WebApp.openLink(finalLink);
+            } else {
+                window.open(finalLink,'_blank');
+            }
             return;
         }
         networks[i]().then(()=>{
             if(window.Telegram && Telegram.WebApp){
                 Telegram.WebApp.openLink(finalLink);
             } else {
-                window.location.href = finalLink;
+                window.open(finalLink,'_blank');
             }
         }).catch(()=>{
             i++;
             tryNext();
         });
     }
-
     tryNext();
 }
 
@@ -174,4 +181,3 @@ if(window.Telegram && Telegram.WebApp){
 
 </body>
 </html>
-
